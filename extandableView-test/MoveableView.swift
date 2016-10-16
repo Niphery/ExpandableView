@@ -11,18 +11,12 @@ import SnapKit
 
 class MoveableView: UIView {
     
-    enum Direction {
-        case none, top, bottom
-    }
     
     enum Position {
         case minimazed, medium, fullSized
     }
     
     private(set) var originalHeight: CGFloat?
-    private(set) var originalPoint: CGPoint?
-    
-    private(set) var currentPosition: Position?
     private(set) var currentheight: CGFloat?
     
     private var miniSize: CGFloat {
@@ -62,7 +56,6 @@ class MoveableView: UIView {
     }
     
     func dragged(gestureRecognizer: UIPanGestureRecognizer) {
-        
         let distance = gestureRecognizer.translation(in: self)
 //        print("Distance x:\(distance.x) y:\(distance.y)")
         print("CurrentHeigth: ", currentheight, " Original Height: ", originalHeight)
@@ -141,10 +134,10 @@ class MoveableView: UIView {
     }
     
     func createUI() {
-        
+        // TODO: Add UI Element
     }
     func createConstraint() {
-        
+        // TODO: Add Constraints
     }
 
     
