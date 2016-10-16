@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B5A04214B66B18368DE2E52 /* Pods_extandableView_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F604AF408664A8B8FD04B126 /* Pods_extandableView_test.framework */; };
 		C9F9B4801DB40981003220BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F9B47F1DB40981003220BD /* AppDelegate.swift */; };
 		C9F9B4821DB40981003220BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F9B4811DB40981003220BD /* ViewController.swift */; };
 		C9F9B4851DB40981003220BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9F9B4831DB40981003220BD /* Main.storyboard */; };
 		C9F9B4881DB40981003220BD /* extandableView_test.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C9F9B4861DB40981003220BD /* extandableView_test.xcdatamodeld */; };
 		C9F9B48A1DB40981003220BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9F9B4891DB40981003220BD /* Assets.xcassets */; };
 		C9F9B48D1DB40981003220BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9F9B48B1DB40981003220BD /* LaunchScreen.storyboard */; };
+		C9F9B4951DB41034003220BD /* MoveableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F9B4941DB41034003220BD /* MoveableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D5CB06EF32C5868C1D7D5EA /* Pods-extandableView-test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-extandableView-test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-extandableView-test/Pods-extandableView-test.debug.xcconfig"; sourceTree = "<group>"; };
+		A3FE38C949B561C8BFB178A2 /* Pods-extandableView-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-extandableView-test.release.xcconfig"; path = "Pods/Target Support Files/Pods-extandableView-test/Pods-extandableView-test.release.xcconfig"; sourceTree = "<group>"; };
 		C9F9B47C1DB40981003220BD /* extandableView-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "extandableView-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9F9B47F1DB40981003220BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9F9B4811DB40981003220BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +28,8 @@
 		C9F9B4891DB40981003220BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9F9B48C1DB40981003220BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C9F9B48E1DB40981003220BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9F9B4941DB41034003220BD /* MoveableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableView.swift; sourceTree = "<group>"; };
+		F604AF408664A8B8FD04B126 /* Pods_extandableView_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_extandableView_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +37,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B5A04214B66B18368DE2E52 /* Pods_extandableView_test.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		134656BD2AE9DC035D26BD1C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F604AF408664A8B8FD04B126 /* Pods_extandableView_test.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2D4D92A477A34B0F26BF8159 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8D5CB06EF32C5868C1D7D5EA /* Pods-extandableView-test.debug.xcconfig */,
+				A3FE38C949B561C8BFB178A2 /* Pods-extandableView-test.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C9F9B4731DB40981003220BD = {
 			isa = PBXGroup;
 			children = (
 				C9F9B47E1DB40981003220BD /* extandableView-test */,
 				C9F9B47D1DB40981003220BD /* Products */,
+				2D4D92A477A34B0F26BF8159 /* Pods */,
+				134656BD2AE9DC035D26BD1C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,6 +89,7 @@
 				C9F9B48B1DB40981003220BD /* LaunchScreen.storyboard */,
 				C9F9B48E1DB40981003220BD /* Info.plist */,
 				C9F9B4861DB40981003220BD /* extandableView_test.xcdatamodeld */,
+				C9F9B4941DB41034003220BD /* MoveableView.swift */,
 			);
 			path = "extandableView-test";
 			sourceTree = "<group>";
@@ -74,9 +101,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9F9B4911DB40981003220BD /* Build configuration list for PBXNativeTarget "extandableView-test" */;
 			buildPhases = (
+				31A9539F7F1EB993B8782B88 /* [CP] Check Pods Manifest.lock */,
 				C9F9B4781DB40981003220BD /* Sources */,
 				C9F9B4791DB40981003220BD /* Frameworks */,
 				C9F9B47A1DB40981003220BD /* Resources */,
+				48DE073871101995A3949A2B /* [CP] Embed Pods Frameworks */,
+				7BBFD50EA09F43312898AC8F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -135,6 +165,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		31A9539F7F1EB993B8782B88 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		48DE073871101995A3949A2B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-extandableView-test/Pods-extandableView-test-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7BBFD50EA09F43312898AC8F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-extandableView-test/Pods-extandableView-test-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C9F9B4781DB40981003220BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -143,6 +221,7 @@
 				C9F9B4821DB40981003220BD /* ViewController.swift in Sources */,
 				C9F9B4881DB40981003220BD /* extandableView_test.xcdatamodeld in Sources */,
 				C9F9B4801DB40981003220BD /* AppDelegate.swift in Sources */,
+				C9F9B4951DB41034003220BD /* MoveableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +342,7 @@
 		};
 		C9F9B4921DB40981003220BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D5CB06EF32C5868C1D7D5EA /* Pods-extandableView-test.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 39G6E8R4RS;
@@ -276,6 +356,7 @@
 		};
 		C9F9B4931DB40981003220BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3FE38C949B561C8BFB178A2 /* Pods-extandableView-test.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 39G6E8R4RS;
@@ -306,6 +387,7 @@
 				C9F9B4931DB40981003220BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
