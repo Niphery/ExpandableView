@@ -8,11 +8,15 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
     
     private(set) var movableView = MoveableView()
-//    var panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(detectPan))
+    private(set) var button = UIButton()
+    
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +30,14 @@ class ViewController: UIViewController {
     }
     
     func initUI() {
+        view.addSubview(button)
         view.addSubview(movableView)
+        
+        button.setTitle("Send Notification", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        
         initConstraint()
+        initActions()
     }
     
     func initConstraint() {
@@ -35,10 +45,16 @@ class ViewController: UIViewController {
             make.bottom.left.right.equalToSuperview()
             make.height.equalTo(150)
         }
+        button.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+        }
+        
     }
     
     func initActions() {
-
+        button.rx.tap.subscribe { (event) in
+            self.movableView.currentPosition.onNext(.medium)
+        }.addDisposableTo(disposeBag)
     }
     
 }

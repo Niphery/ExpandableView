@@ -7,7 +7,7 @@ target 'extandableView-test' do
 
   # Pods for extandableView-test
   pod 'SnapKit', '~> 3.0.2'
-#  pod 'RxSwift',    '3.0.0-beta.2'
-#  pod 'RxCocoa',    '3.0.0-beta.2'
+  pod 'RxSwift',    '3.0.0-beta.2'
+  pod 'RxCocoa',    '3.0.0-beta.2'
 
 end

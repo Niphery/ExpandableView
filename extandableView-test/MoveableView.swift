@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 class MoveableView: UIView {
     
@@ -40,6 +41,9 @@ class MoveableView: UIView {
             return 450
         }
     }
+    
+    var currentPosition = BehaviorSubject<Position>(value: .minimazed)
+    let disposeBag = DisposeBag()
 
     init() {
         super.init(frame: CGRect.zero)
@@ -53,6 +57,9 @@ class MoveableView: UIView {
     func initView() {
         backgroundColor = .yellow
         addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragged)))
+        createUI()
+        createConstraint()
+//        createActions()
     }
     
     func dragged(gestureRecognizer: UIPanGestureRecognizer) {
@@ -81,10 +88,16 @@ class MoveableView: UIView {
         case .ended:
             if currentheight! <= miniSize + 50 {
                 scaleView(position: .minimazed)
+//                self.currentPosition.onNext(.minimazed)
             } else if (mediumSize - 50) <= currentheight!  && currentheight! <= (mediumSize + 50) {
                 scaleView(position: .medium)
+//                self.currentPosition.onNext(.medium)
             } else if (fullSize - 50) <= currentheight! {
                 scaleView(position: .fullSized)
+//                self.currentPosition.onNext(.fullSized)
+                
+                
+                
             } else {
                 print("RESETING VALUE")
                 resetViewPositionAndTransformation()
@@ -99,25 +112,33 @@ class MoveableView: UIView {
         let animations: UIViewAnimationOptions = [.curveEaseInOut]
         switch position {
         case .minimazed:
-            UIView.animate(withDuration: 5, delay: 0, options: animations, animations: {
+            UIView.animate(withDuration: 0.7, delay: 0, options: animations, animations: {
                     self.snp.updateConstraints({ (make) in
                         make.height.equalTo(self.miniSize)
                     })
+                    self.superview?.layoutIfNeeded()
                 }, completion: nil)
         case .medium:
-            UIView.animate(withDuration: 5, delay: 0, options: animations, animations: {
-
+            UIView.animate(withDuration: 0.7, delay: 0, options: animations, animations: {
+                    print("Notification is Displaying")
                     self.snp.updateConstraints({ (make) in
                         make.height.equalTo(self.mediumSize)
                     })
+                    self.superview?.layoutIfNeeded()
 
-                }, completion: nil)
+                }, completion: { (completed) in
+                    if completed {
+                        print("Notification is going away")
+                        self.currentPosition.onNext(.minimazed)
+                    }
+            })
         case .fullSized:
-            UIView.animate(withDuration: 5, delay: 0, options: animations, animations: {
+            UIView.animate(withDuration: 0.7, delay: 0, options: animations, animations: {
 
                     self.snp.updateConstraints({ (make) in
                         make.height.equalTo(self.fullSize)
                     })
+                    self.superview?.layoutIfNeeded()
 
                 }, completion: nil)
         }
@@ -138,6 +159,12 @@ class MoveableView: UIView {
     }
     func createConstraint() {
         // TODO: Add Constraints
+    }
+    func createActions() {
+        self.currentPosition.subscribe(onNext: { (position) in
+            print(position)
+            self.scaleView(position: position)
+            }).addDisposableTo(disposeBag)
     }
 
     
