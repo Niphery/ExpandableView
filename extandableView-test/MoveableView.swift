@@ -13,7 +13,7 @@ import RxSwift
 class MoveableView: UIView {
     
     enum Position {
-        case minimized, medium, fullSized
+        case miniMode, notificationMode, fullMode
     }
     enum States {
         case moving, ending, none
@@ -50,11 +50,13 @@ class MoveableView: UIView {
         return (fullSize - mediumSize) / 2
     }
     private var currentState = BehaviorSubject<States>(value: .none)
-    var currentPosition = BehaviorSubject<Position>(value: .minimized)
+    var currentPosition = PublishSubject<Position>()
 
     let disposeBag = DisposeBag()
     let animationTimer = 0.5
     let animations: UIViewAnimationOptions = [.curveEaseInOut]
+    var currentVelocity: CGFloat = 0
+    let springDamping: CGFloat = 0
     
 
     init() {
@@ -76,8 +78,9 @@ class MoveableView: UIView {
     
     func dragged(gestureRecognizer: UIPanGestureRecognizer) {
         let distance = gestureRecognizer.translation(in: self)
+        currentVelocity = abs(gestureRecognizer.velocity(in: self).y)
 //        print("Distance x:\(distance.x) y:\(distance.y)")
-        print("CurrentHeigth: ", currentheight, " Original Height: ", originalHeight)
+        print("CurrentHeigth: ", currentheight, " OriginalHeight: ", originalHeight, " Velocity: ", currentVelocity)
         
         switch gestureRecognizer.state {
         case .began:
@@ -95,63 +98,56 @@ class MoveableView: UIView {
     
     func scaleView(position: Position) {
         switch position {
-        case .minimized:
-            showMinimized()
-        case .medium:
+        case .miniMode:
+            showminiMode()
+        case .notificationMode:
             showNotification()
-        case .fullSized:
+        case .fullMode:
             showFullScreen()
         }
 
     }
     
-    func showMinimized() {
-        UIView.animate(withDuration: animationTimer, delay: 0, options: animations, animations: {
-            self.snp.updateConstraints({ (make) in
-                make.height.equalTo(self.miniSize)
-            })
-            self.superview?.layoutIfNeeded()
-            }, completion: nil)
+    func showminiMode() {
+         animateUI(wantedSize: miniSize, color: .yellow)
     }
     func showNotification() {
-        UIView.animate(withDuration: animationTimer, delay: 0, options: animations, animations: {
+         UIView.animate(withDuration: animationTimer, delay: 0, usingSpringWithDamping: springDamping, initialSpringVelocity: currentVelocity, options: animations, animations: {
             print("Notification is Displaying")
             self.snp.updateConstraints({ (make) in
                 make.height.equalTo(self.mediumSize)
             })
+            self.backgroundColor = .orange
             self.superview?.layoutIfNeeded()
             
             }, completion: { (completed) in
                 if completed {
                     print("Notification is gonna go")
-                    Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (timer) in
                         print("Notification leaving", timer)
-                        self.currentPosition.onNext(.minimized)
-                        self.showMinimized()
+                        self.currentPosition.onNext(.miniMode)
                     })
-//                    Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.showMinimized), userInfo: nil, repeats: false)
+
                 }
         })
     }
     func showFullScreen() {
-        UIView.animate(withDuration: animationTimer, delay: 0, options: animations, animations: {
-            
-            self.snp.updateConstraints({ (make) in
-                make.height.equalTo(self.fullSize)
-            })
-            self.superview?.layoutIfNeeded()
-            
-            }, completion: nil)
+         animateUI(wantedSize: fullSize, color: .red)
     }
-
     
     func resetViewPositionAndTransformation() {
+       animateUI(wantedSize: miniSize, color: .yellow)
+    }
+    
+    func animateUI(wantedSize: CGFloat, color: UIColor) {
+//        UIView.animate(withDuration: animationTimer, delay: 0, usingSpringWithDamping: springDamping, initialSpringVelocity: currentVelocity, options: animations, animations: {
         UIView.animate(withDuration: animationTimer, delay: 0, options: [.curveEaseInOut], animations: {
             self.snp.updateConstraints({ (make) in
-                make.height.equalTo(self.miniSize)
+                    make.height.equalTo(wantedSize)
             })
-             self.superview?.layoutIfNeeded()
-        }, completion: nil)
+            self.backgroundColor = color
+            self.superview?.layoutIfNeeded()
+            }, completion: nil)
     }
     
     func createUI() {
@@ -162,18 +158,40 @@ class MoveableView: UIView {
     }
     func createActions() {
         //On Release, adjust view to key Value
-//        self.currentPosition.subscribe(onNext: { (position) in
-//            print(position)
-////            self.scaleView(position: position)
-//            switch position {
-//            case .minimized:
-//                self.showMinimized()
-//            case .medium:
+        self.currentPosition.subscribe(onNext: { (position) in
+            print(position)
+
+            switch position {
+            case .miniMode:
+                self.showminiMode()
+            case .notificationMode:
+                self.showNotification()
+            case .fullMode:
+                self.showFullScreen()
+
+            }
+//            if position == .miniMode {
+//                self.showminiMode()
+//            } else if position == .notificationMode {
 //                self.showNotification()
-//            case .fullSized:
+//            } else if position == .fullMode {
 //                self.showFullScreen()
 //            }
-//        }).addDisposableTo(disposeBag)
+            
+        }).addDisposableTo(disposeBag)
+        
+//        self.currentPosition.subscribe { (event) in
+//            let position  = event.element
+//            if position == .miniMode {
+//                self.showminiMode()
+//            } else if position == .notificationMode {
+//                self.showNotification()
+//            } else if position == .fullMode {
+//                self.showFullScreen()
+//            } else {
+//                print("Event: ", event)
+//            }
+//        }.addDisposableTo(disposeBag)
     
         
         //When moved, change size + Color
@@ -193,15 +211,13 @@ class MoveableView: UIView {
                 })
             case .ending:
                 
-                if self.currentheight <= self.miniSize + self.minDif {
-                    self.scaleView(position: .minimized)
-//                    self.currentPosition.onNext(.minimized)
-                } else if (self.mediumSize - self.minDif) <= self.currentheight  && self.currentheight <= (self.mediumSize + self.fullDif) {
-                    self.scaleView(position: .medium)
-//                    self.currentPosition.onNext(.medium)
-                } else if (self.fullSize - self.fullDif) <= self.currentheight {
-                    self.scaleView(position: .fullSized)
-//                    self.currentPosition.onNext(.fullSized)
+                if self.currentheight <= self.mediumSize {
+                    self.currentPosition.onNext(.miniMode)
+//                }
+//                else if (self.mediumSize - self.minDif) <= self.currentheight  && self.currentheight <= (self.mediumSize + self.fullDif) {
+//                    self.currentPosition.onNext(.notificationMode)
+                } else if self.mediumSize < self.currentheight {
+                    self.currentPosition.onNext(.fullMode)
                 } else {
                     print("RESETING VALUE")
                     self.resetViewPositionAndTransformation()

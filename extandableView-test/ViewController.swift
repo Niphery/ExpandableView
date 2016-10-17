@@ -30,8 +30,9 @@ class ViewController: UIViewController {
     }
     
     func initUI() {
-        view.addSubview(button)
+        
         view.addSubview(movableView)
+        view.addSubview(button)
         
         button.setTitle("Send Notification", for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -53,7 +54,8 @@ class ViewController: UIViewController {
     
     func initActions() {
         button.rx.tap.subscribe { (event) in
-            self.movableView.currentPosition.onNext(.medium)
+            self.movableView.currentPosition.onNext(.notificationMode)
+            print("Button Tapped")
         }.addDisposableTo(disposeBag)
     }
     
