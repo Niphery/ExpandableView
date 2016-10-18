@@ -56,7 +56,7 @@ class MoveableView: UIView {
     let animationTimer = 0.5
     let animations: UIViewAnimationOptions = [.curveEaseInOut]
     var currentVelocity: CGFloat = 0
-    let springDamping: CGFloat = 0
+    let springDamping: CGFloat = 0.2
     
 
     init() {
@@ -170,29 +170,9 @@ class MoveableView: UIView {
                 self.showFullScreen()
 
             }
-//            if position == .miniMode {
-//                self.showminiMode()
-//            } else if position == .notificationMode {
-//                self.showNotification()
-//            } else if position == .fullMode {
-//                self.showFullScreen()
-//            }
+
             
         }).addDisposableTo(disposeBag)
-        
-//        self.currentPosition.subscribe { (event) in
-//            let position  = event.element
-//            if position == .miniMode {
-//                self.showminiMode()
-//            } else if position == .notificationMode {
-//                self.showNotification()
-//            } else if position == .fullMode {
-//                self.showFullScreen()
-//            } else {
-//                print("Event: ", event)
-//            }
-//        }.addDisposableTo(disposeBag)
-    
         
         //When moved, change size + Color
         self.currentState.subscribe(onNext: { (state) in
